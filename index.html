@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="2hlJFv0Z5D0PmoefY_A_96CJil0LWhNQQyvU6Yf0RU4" />
+    <title>EDUCA PRO+ | Plataforma Virtual de Aprendizaje</title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="">
+
+    <style>
+        :root {
+            --bg-gradient: radial-gradient(circle at 10% 20%, rgba(4, 28, 64, 1) 0%, rgba(13, 15, 28, 1) 100%);
+            --primary: #f26e22;
+            --primary-hover: #d45613;
+            --text-main: #ffffff;
+            --text-soft: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #0d0f1c;
+        }
+
+        
+        .container {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+            position: relative;
+        }
+
+        
+        .left-side {
+            flex: 1.2;
+            background: var(--bg-gradient);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 10%;
+            position: relative;
+            z-index: 3;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+
+        .brand-icon {
+            background: var(--primary);
+            color: white;
+            padding: 10px;
+            border-radius: 12px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(242, 110, 34, 0.3);
+        }
+
+        .brand-text h2 {
+            color: var(--text-main);
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .brand-text span {
+            color: var(--text-soft);
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            display: block;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        h1 span {
+            color: var(--primary);
+        }
+
+        .description {
+            font-size: 1.15rem;
+            color: var(--text-soft);
+            line-height: 1.6;
+            max-width: 550px;
+        }
+
+        
+        .right-side {
+            flex: 0.8;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 420px;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f1f5f9;
+            text-align: center;
+        }
+
+        .auth-card h3 {
+            font-size: 1.6rem;
+            color: #0f172a;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .auth-card p {
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+        }
+
+        .button {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            background: #0f172a; 
+            color: #ffffff;
+            text-decoration: none;
+            transition: background 0.2s ease, transform 0.1s ease;
+        }
+
+        .button:hover {
+            background: #1e293b;
+            transform: translateY(-1px);
+        }
+
+        
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        
+        @media(max-width: 968px) {
+            .container {
+                flex-direction: column;
+            }
+            .left-side {
+                padding: 40px 20px;
+                flex: 1;
+                justify-content: flex-end;
+            }
+            .right-side {
+                flex: 1;
+                padding: 20px;
+                align-items: flex-start;
+            }
+            h1 {
+                font-size: 2.2rem;
+            }
+            .auth-card {
+                max-width: 100%;
+                box-shadow: none;
+                padding: 20px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <canvas id="particleCanvas"></canvas>
+
+    <div class="left-side">
+        <div class="brand">
+            <div class="brand-icon">🎓</div>
+            <div class="brand-text">
+                <h2>Educa Pro+</h2>
+                <span>PLATAFORMA ACADÉMICA</span>
+            </div>
+        </div>
+        
+        <h1>Gestiona tu academia <br><span>como una startup.</span></h1>
+        
+        <p class="description">
+            Estudiantes, tutores, ICFES, finanzas y marketing en una sola plataforma moderna, escalable y diseñada para crecer.
+        </p>
+    </div>
+
+    <div class="right-side">
+        <div class="auth-card">
+            <h3>Bienvenido de vuelta</h3>
+            <p>Accede al panel de tu academia virtual.</p>
+            <a href="menuacademia.html" class="button">INGRESAR AL INICIO</a>
+        </div>
+    </div>
+</div>
+
+<script>
+
+const canvas = document.getElementById('particleCanvas');
+const ctx = canvas.getContext('2d');
+
+function resizeCanvas(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resizeCanvas();
+
+const icons = ["📚","🧠","🎓","💡","📝","💻","📖","🌎"];
+
+class FloatingIcon{
+    constructor(){
+        this.reset();
+    }
+
+    reset(){
+        this.x = Math.random() * (canvas.width * 0.6); // Concentrados más al lado izquierdo
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 12 + 14;
+        this.icon = icons[Math.floor(Math.random() * icons.length)];
+        this.dx = (Math.random() - 0.5) * 0.4;
+        this.dy = (Math.random() - 0.5) * 0.4;
+        this.opacity = Math.random() * 0.15 + 0.1; // Sutiles para no estorbar el texto
+    }
+
+    draw(){
+        ctx.save();
+        ctx.globalAlpha = this.opacity;
+        ctx.font = `${this.size}px Arial`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(this.icon, this.x, this.y);
+        ctx.restore();
+    }
+
+    update(){
+        this.x += this.dx;
+        this.y += this.dy;
+
+        if(this.x < -30) this.x = (canvas.width * 0.6) + 30;
+        if(this.x > (canvas.width * 0.6) + 30) this.x = -30;
+
+        if(this.y < -30) this.y = canvas.height + 30;
+        if(this.y > canvas.height + 30) this.y = -30;
+
+        this.draw();
+    }
+}
+
+let particles = [];
+for(let i = 0; i < 25; i++){ 
+    particles.push(new FloatingIcon());
+}
+
+function animate(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => p.update());
+    requestAnimationFrame(animate);
+}
+
+animate();
+window.addEventListener("resize", resizeCanvas);
+</script>
+</body>
+</html>
+

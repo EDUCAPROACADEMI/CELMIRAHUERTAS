@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CELMIRA HUERTAS | Preguntas y Soporte</title>
+    <link rel="stylesheet" href="STILOS.CSS">
+    <style>
+        .form-container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 240, 255, 0.1);
+            color: #ffffff;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #00f0ff;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #475569;
+            background: #0f172a;
+            color: #ffffff;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+        .form-group textarea {
+            resize: vertical;
+            height: 120px;
+        }
+        .btn-submit {
+            width: 100%;
+            background: #00f0ff;
+            color: #000000;
+            padding: 14px;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .btn-submit:hover {
+            background: #a855f7;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <img src="logo-celmira.png" alt="Escudo Celmira Huertas" style="height: 40px; width: 40px; object-fit: cover; border-radius: 50%; border: 2px solid var(--cyan-neon);">
+            CELMIRA <span>HUERTAS</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="menuacademia.html">Inicio</a></li>
+                <li><a href="preguntas.html" class="active">Preguntas</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="app-layout" style="display: block;">
+        <div class="form-container">
+            <h2 style="text-align: center; margin-top: 0;">📩 Centro de Soporte y Preguntas</h2>
+            <p style="text-align: center; color: #94a3b8; margin-bottom: 30px;">
+                ¿Tienes alguna duda o inconveniente institucional? Escríbenos y te responderemos al correo de inmediato.
+            </p>
+
+            <form action="https://formspree.io/f/xzdldzpa" method="POST">
+                
+                <div class="form-group">
+                    <label for="nombre">Nombre Completo:</label>
+                    <input type="text" id="nombre" name="name" placeholder="Ej: Juan Pérez" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="correo">Tu Correo Electrónico:</label>
+                    <input type="email" id="correo" name="_replyto" placeholder="Ej: alumno@gmail.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="tipo">¿Cuál es el motivo de tu consulta?</label>
+                    <select id="tipo" name="category" required>
+                        <option value="" disabled selected>Selecciona una opción</option>
+                        <option value="Problema Técnico">Tengo un problema técnico con la plataforma</option>
+                        <option value="Duda Académica">Tengo una duda académica de algún grado</option>
+                        <option value="Otro">Otro motivo</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="mensaje">¿Cuál es tu pregunta o inconveniente?</label>
+                    <textarea id="mensaje" name="message" placeholder="Escribe detalladamente tu consulta aquí..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">Enviar Mensaje</button>
+            </form>
+        </div>
+    </main>
+
+    <script type="module" src="JavaScript.js"></script>
+</body>
+</html>

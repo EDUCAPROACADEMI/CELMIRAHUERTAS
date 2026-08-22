@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CELMIRA HUERTAS | Panel Administrador</title>
+    <link rel="stylesheet" href="STILOS.CSS">
+    <style>
+        .admin-container { max-width: 600px; margin: 80px auto; background: #1e293b; padding: 30px; border-radius: 12px; border: 1px solid #00f0ff; color: white; }
+        .admin-container select, .admin-container input { width: 100%; padding: 12px; margin: 10px 0; background: #0f172a; border: 1px solid #475569; color: white; border-radius: 6px; box-sizing: border-box; }
+        .key-item { display: flex; justify-content: space-between; align-items: center; background: #0f172a; padding: 10px; margin: 5px 0; border-radius: 6px; }
+        .btn-delete { background: #ff5555; border: none; color: white; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
+        .btn-add { background: #00f0ff; border: none; color: black; font-weight: bold; padding: 10px; width: 100%; cursor: pointer; border-radius: 6px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="logo-celmira.png" alt="Escudo Celmira Huertas" style="height: 40px; width: 40px; object-fit: cover; border-radius: 50%; border: 2px solid var(--cyan-neon);">
+            CELMIRA <span>HUERTAS ADMIN</span>
+        </div>
+        <nav><ul><li><a href="menuacademia.html">Volver al Inicio</a></li></ul></nav>
+    </header>
+
+    <div class="admin-container">
+        <h2>Panel de Gestión de Contraseñas</h2>
+        <p style="color: #94a3b8; margin-bottom: 20px;">Agrega o elimina claves de acceso por grado en tiempo real.</p>
+
+        <label>Selecciona el Grado:</label>
+        <select id="select-grado">
+            <option value="PRIMERO">Primero</option>
+            <option value="SEGUNDO">Segundo</option>
+            <option value="TERCERO">Tercero</option>
+            <option value="CUARTO">Cuarto</option>
+            <option value="QUINTO">Quinto</option>
+            <option value="SEXTO">Sexto</option>
+            <option value="SEPTIMO">Séptimo</option>
+            <option value="OCTAVO">Octavo</option>
+            <option value="NOVENO">Noveno</option>
+            <option value="DECIMO">Décimo</option>
+            <option value="ONCE">Once</option>
+        </select>
+
+        <label>Selecciona el Rol:</label>
+        <select id="select-rol">
+            <option value="alumnos">Alumnos</option>
+            <option value="tutores">Tutores / Docentes</option>
+        </select>
+
+        <hr style="border-color: #475569; margin: 20px 0;">
+
+        <h3>Nueva Contraseña</h3>
+        <input type="text" id="nueva-clave" placeholder="Escribe la contraseña...">
+        <button class="btn-add" id="btn-agregar-clave">Guardar Contraseña</button>
+
+        <h3 style="margin-top: 30px;">Contraseñas Activas</h3>
+        <div id="lista-claves">Cargando...</div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, onValue, push, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBqApazED0fbAW8Bj2hvlDiyRgIlJ-UrjA",
+            authDomain: "celmirahuertas-78fbb.firebaseapp.com",
+            databaseURL: "https://celmirahuertas-78fbb-default-rtdb.firebaseio.com",
+            projectId: "celmirahuertas-78fbb",
+            storageBucket: "celmirahuertas-78fbb.firebasestorage.app",
+            messagingSenderId: "133956808415",
+            appId: "1:133956808415:web:d4d837533410628ef3436a",
+            measurementId: "G-VJHXEY45SN"
+        };
+
+        const db = getDatabase(initializeApp(firebaseConfig));
+        const selectGrado = document.getElementById('select-grado');
+        const selectRol = document.getElementById('select-rol');
+        const listaClavesDiv = document.getElementById('lista-claves');
+
+        function cargarClaves() {
+            const grado = selectGrado.value;
+            const rol = selectRol.value;
+            const refRuta = ref(db, `configuracion_accesos/${grado}/${rol}`);
+
+            listaClavesDiv.innerHTML = 'Cargando...';
+
+            onValue(refRuta, (snapshot) => {
+                listaClavesDiv.innerHTML = '';
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    Object.keys(data).forEach((key) => {
+                        const password = data[key];
+                        listaClavesDiv.innerHTML += `
+                            <div class="key-item">
+                                <span>🔑 ${password}</span>
+                                <button class="btn-delete" onclick="window.borrarClave('${grado}', '${rol}', '${key}')">Eliminar</button>
+                            </div>`;
+                    });
+                } else {
+                    listaClavesDiv.innerHTML = '<p style="color: #94a3b8;">No hay contraseñas registradas para este grado.</p>';
+                }
+            }, { onlyOnce: true });
+        }
+
+        selectGrado.addEventListener('change', cargarClaves);
+        selectRol.addEventListener('change', cargarClaves);
+        cargarClaves();
+
+        document.getElementById('btn-agregar-clave').addEventListener('click', () => {
+            const grado = selectGrado.value;
+            const rol = selectRol.value;
+            const nuevaClave = document.getElementById('nueva-clave').value.trim();
+
+            if (nuevaClave !== "") {
+                const refRuta = ref(db, `configuracion_accesos/${grado}/${rol}`);
+                push(refRuta, nuevaClave).then(() => {
+                    document.getElementById('nueva-clave').value = '';
+                    cargarClaves();
+                    alert('¡Contraseña agregada con éxito!');
+                }).catch((error) => {
+                    console.error("Error al guardar:", error);
+                    alert("Error al guardar. Revisa la consola.");
+                });
+            } else {
+                alert("Escribe una contraseña válida.");
+            }
+        });
+
+        window.borrarClave = function(grado, rol, key) {
+            if (confirm('¿Estás seguro de eliminar esta contraseña?')) {
+                remove(ref(db, `configuracion_accesos/${grado}/${rol}/${key}`)).then(() => {
+                    cargarClaves();
+                });
+            }
+        }
+    </script>
+</body>
+</html>
