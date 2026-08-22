@@ -1,8 +1,8 @@
 :root {
     --bg-light: #f6f5f0;
     --bg-card: #ffffff;         
-    --primary-green: #3b7a57;     /* Verde institucional elegante */
-    --accent-teal: #20b2aa;       /* Acento fresco */
+    --primary-green: #3b7a57;    
+    --accent-teal: #20b2aa;       
     --text-dark: #1e293b;
     --text-gray: #64748b;
 }
@@ -50,7 +50,7 @@ header {
     gap: 12px;
 }
 
-/* LOGOTIPO CIRCULAR LIMPIO */
+
 .logo img {
     height: 42px;
     width: 42px;
