@@ -15,7 +15,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// Lista de grados escolares de 1° a 11°
+
 const GRADOS_COLEGIO = [
     { id: 'btn-primero', nombre: 'PRIMERO' },
     { id: 'btn-segundo', nombre: 'SEGUNDO' },
@@ -45,7 +45,6 @@ const inputPass = document.getElementById('input-pass');
 const btnSubmitPass = document.getElementById('btn-submit-pass');
 const errorMsg = document.getElementById('error-msg');
 
-// Asignar eventos a los botones de los grados
 GRADOS_COLEGIO.forEach(grado => {
     const btn = document.getElementById(grado.id);
     if (btn) {
@@ -107,7 +106,7 @@ if(btnSubmitPass) {
     inputPass.addEventListener('keypress', (e) => { if (e.key === 'Enter') validarContrasenaDinamica(); });
 }
 
-// Validar contraseñas consultando directamente Firebase (Dinámico)
+
 async function validarContrasenaDinamica() {
     const passwordIngresada = inputPass.value.trim();
     const rolRuta = selectedRole === 'tutor' ? 'tutores' : 'alumnos';
@@ -121,7 +120,7 @@ async function validarContrasenaDinamica() {
             esValida = Object.values(clavesObj).includes(passwordIngresada);
         }
 
-        if (esValida || passwordIngresada === 'KOUSPARYKEVIN1') { // Clave maestra de respaldo
+        if (esValida || passwordIngresada === 'KOUSPARYKEVIN1') { 
             errorMsg.style.display = 'none';
             stepLogin.style.display = 'none';
             if (selectedRole === 'tutor') {
@@ -138,7 +137,6 @@ async function validarContrasenaDinamica() {
     }
 }
 
-// Panel del Docente (Meet / Zoom)
 function mostrarPanelTutor() {
     stepTutorDashboard.style.display = 'block';
     const gradoRef = ref(db, 'grados/' + gradoActivo);
@@ -166,7 +164,7 @@ if(btnSendAnnouncement) {
     });
 }
 
-// Panel del Alumno
+
 function mostrarPanelAlumno() {
     stepAlumnoDashboard.style.display = 'block';
     const gradoRef = ref(db, 'grados/' + gradoActivo);
