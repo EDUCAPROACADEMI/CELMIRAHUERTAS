@@ -2,19 +2,20 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
 import { getDatabase, ref, set, onValue, get, push, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBqApazED0fbAW8Bj2hvlDiyRgIlJ-UrjA",
-    authDomain: "celmirahuertas-78fbb.firebaseapp.com",
-    databaseURL: "https://celmirahuertas-78fbb-default-rtdb.firebaseio.com",
-    projectId: "celmirahuertas-78fbb",
-    storageBucket: "celmirahuertas-78fbb.firebasestorage.app",
-    messagingSenderId: "133956808415",
-    appId: "1:133956808415:web:d4d837533410628ef3436a",
-    measurementId: "G-VJHXEY45SN"
+    apiKey: "AIzaSyDzYJPI9mU7RlewCmeoCKVSQR4DJscnCE8",
+    authDomain: "educapro-academia.firebaseapp.com",
+    databaseURL: "https://educapro-academia-default-rtdb.firebaseio.com",
+    projectId: "educapro-academia",
+    storageBucket: "educapro-academia.firebasestorage.app",
+    messagingSenderId: "283431566568",
+    appId: "1:283431566568:web:89b44ba5a23f0bdd9ddd5d",
+    measurementId: "G-6KDTV3FSHD"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
+// Lista de grados escolares en lugar de cursos
 const GRADOS_COLEGIO = [
     { id: 'btn-primero', nombre: 'PRIMERO' },
     { id: 'btn-segundo', nombre: 'SEGUNDO' },
@@ -33,7 +34,6 @@ let selectedRole = '';
 let gradoActivo = '';
 let FirebaseListener = null; 
 
-// Modales de Grados
 const modal = document.getElementById('modal-password');
 const closeModal = document.getElementById('close-modal');
 const stepRoleSelection = document.getElementById('step-role-selection');
@@ -45,6 +45,7 @@ const inputPass = document.getElementById('input-pass');
 const btnSubmitPass = document.getElementById('btn-submit-pass');
 const errorMsg = document.getElementById('error-msg');
 
+// Asignar eventos a los botones de los grados
 GRADOS_COLEGIO.forEach(grado => {
     const btn = document.getElementById(grado.id);
     if (btn) {
@@ -96,7 +97,7 @@ function irALogin(rol) {
     selectedRole = rol;
     stepRoleSelection.style.display = 'none';
     stepLogin.style.display = 'block';
-    document.getElementById('login-title').innerText = `Acceso ${rol === 'tutor' ? 'Docente' : 'Alumno'} - ${gradoActivo}`;
+    document.getElementById('login-title').innerText = `Acceso ${rol === 'tutor' ? 'Tutor' : 'Alumno'} - ${gradoActivo}`;
     document.getElementById('login-description').innerText = `Ingresa tu contraseña para ${gradoActivo}:`;
     inputPass.focus();
 }
@@ -106,6 +107,7 @@ if(btnSubmitPass) {
     inputPass.addEventListener('keypress', (e) => { if (e.key === 'Enter') validarContrasenaDinamica(); });
 }
 
+// Validar contraseñas consultando directamente Firebase (Dinámico)
 async function validarContrasenaDinamica() {
     const passwordIngresada = inputPass.value.trim();
     const rolRuta = selectedRole === 'tutor' ? 'tutores' : 'alumnos';
@@ -116,10 +118,11 @@ async function validarContrasenaDinamica() {
         let esValida = false;
         if (snapshot.exists()) {
             const clavesObj = snapshot.val();
+            // Compara con los valores del objeto guardado en Firebase
             esValida = Object.values(clavesObj).includes(passwordIngresada);
         }
 
-        if (esValida || passwordIngresada === 'KOUSPARYKEVIN1') {
+        if (esValida || passwordIngresada === 'KOUSPARYKEVIN1') { // Clave maestra opcional
             errorMsg.style.display = 'none';
             stepLogin.style.display = 'none';
             if (selectedRole === 'tutor') {
@@ -136,7 +139,7 @@ async function validarContrasenaDinamica() {
     }
 }
 
-// Panel del Docente
+// Panel del Tutor (Meet / Zoom)
 function mostrarPanelTutor() {
     stepTutorDashboard.style.display = 'block';
     const gradoRef = ref(db, 'grados/' + gradoActivo);
@@ -144,12 +147,8 @@ function mostrarPanelTutor() {
     get(gradoRef).then((snapshot) => {
         const data = snapshot.val();
         const inputTutor = document.getElementById('tutor-message');
-        const selectPlataforma = document.getElementById('tutor-platform');
         if (inputTutor) {
             inputTutor.value = data ? data.codigoMeet : '';
-        }
-        if (selectPlataforma && data && data.plataforma) {
-            selectPlataforma.value = data.plataforma;
         }
     });
 }
@@ -158,16 +157,8 @@ const btnSendAnnouncement = document.getElementById('btn-send-announcement');
 if(btnSendAnnouncement) {
     btnSendAnnouncement.addEventListener('click', () => {
         const nuevoEnlace = document.getElementById('tutor-message').value.trim();
-        const plataformaSeleccionada = document.getElementById('tutor-platform').value;
-
-        if (!nuevoEnlace.startsWith('http')) {
-            alert('Por favor, ingresa un enlace válido que comience con http:// o https://');
-            return;
-        }
-
         set(ref(db, 'grados/' + gradoActivo), {
-            codigoMeet: nuevoEnlace,
-            plataforma: plataformaSeleccionada
+            codigoMeet: nuevoEnlace
         }).then(() => {
             const successMsg = document.getElementById('tutor-success-msg');
             successMsg.style.display = 'block';
@@ -184,19 +175,11 @@ function mostrarPanelAlumno() {
     FirebaseListener = onValue(gradoRef, (snapshot) => {
         const data = snapshot.val();
         const inputAlumno = document.getElementById('alumno-received-message');
-        const infoPlataforma = document.getElementById('alumno-info-plataforma');
-        
         if (inputAlumno) {
             if (data && data.codigoMeet && data.codigoMeet.trim() !== '') {
                 inputAlumno.value = data.codigoMeet;
-                if (infoPlataforma) {
-                    infoPlataforma.innerText = `Clase por ${data.plataforma || 'Meet / Zoom'}:`;
-                }
             } else {
                 inputAlumno.value = "No hay enlaces asignados";
-                if (infoPlataforma) {
-                    infoPlataforma.innerText = "Estado actual:";
-                }
             }
         }
     });
@@ -207,9 +190,7 @@ if(btnCopyCode) {
     btnCopyCode.addEventListener('click', () => {
         const inputAlumno = document.getElementById('alumno-received-message');
         if (inputAlumno && inputAlumno.value.startsWith('http')) {
-            navigator.clipboard.writeText(inputAlumno.value).then(() => alert('¡Enlace copiado con éxito!'));
-        } else {
-            alert('No hay un enlace válido para copiar.');
+            navigator.clipboard.writeText(inputAlumno.value).then(() => alert('¡Enlace copiado!'));
         }
     });
 }
@@ -224,54 +205,4 @@ if(btnGoToMeet) {
             alert('Aún no hay una clase activa asignada.');
         }
     });
-}
-
-// ==========================================
-// CONTROL DEL MODAL DE ADMINISTRADOR
-// ==========================================
-const modalAdmin = document.getElementById('modal-admin-password');
-const btnAbrirAdmin = document.getElementById('btn-abrir-admin');
-const closeModalAdmin = document.getElementById('close-modal-admin');
-const btnSubmitAdminPass = document.getElementById('btn-submit-admin-pass');
-const inputAdminPass = document.getElementById('input-admin-pass');
-const adminErrorMsg = document.getElementById('admin-error-msg');
-
-if (btnAbrirAdmin) {
-    btnAbrirAdmin.addEventListener('click', (e) => {
-        e.preventDefault();
-        if (modalAdmin) {
-            modalAdmin.style.display = 'flex';
-            if (inputAdminPass) {
-                inputAdminPass.value = '';
-                inputAdminPass.focus();
-            }
-            if (adminErrorMsg) adminErrorMsg.style.display = 'none';
-        }
-    });
-}
-
-if (closeModalAdmin) {
-    closeModalAdmin.addEventListener('click', () => {
-        if (modalAdmin) modalAdmin.style.display = 'none';
-    });
-}
-
-function verificarAdmin() {
-    const passMaestra = "AdminCelmira2026";
-    if (inputAdminPass && inputAdminPass.value.trim() === passMaestra) {
-        window.location.href = "admin.html";
-    } else {
-        if (adminErrorMsg) adminErrorMsg.style.display = 'block';
-    }
-}
-
-if (btnSubmitAdminPass) {
-    btnSubmitAdminPass.addEventListener('click', verificarAdmin);
-    if (inputAdminPass) {
-        inputAdminPass.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                verificarAdmin();
-            }
-        });
-    }
 }
