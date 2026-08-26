@@ -2,20 +2,20 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
 import { getDatabase, ref, set, onValue, get, push, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDzYJPI9mU7RlewCmeoCKVSQR4DJscnCE8",
-    authDomain: "educapro-academia.firebaseapp.com",
-    databaseURL: "https://educapro-academia-default-rtdb.firebaseio.com",
-    projectId: "educapro-academia",
-    storageBucket: "educapro-academia.firebasestorage.app",
-    messagingSenderId: "283431566568",
-    appId: "1:283431566568:web:89b44ba5a23f0bdd9ddd5d",
-    measurementId: "G-6KDTV3FSHD"
+    apiKey: "AIzaSyBqApazED0fbAW8Bj2hvlDiyRgIlJ-UrjA",
+    authDomain: "celmirahuertas-78fbb.firebaseapp.com",
+    databaseURL: "https://celmirahuertas-78fbb-default-rtdb.firebaseio.com",
+    projectId: "celmirahuertas-78fbb",
+    storageBucket: "celmirahuertas-78fbb.firebasestorage.app",
+    messagingSenderId: "133956808415",
+    appId: "1:133956808415:web:d4d837533410628ef3436a",
+    measurementId: "G-VJHXEY45SN"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// Lista de grados escolares en lugar de cursos
+// Lista de grados escolares de 1° a 11°
 const GRADOS_COLEGIO = [
     { id: 'btn-primero', nombre: 'PRIMERO' },
     { id: 'btn-segundo', nombre: 'SEGUNDO' },
@@ -97,7 +97,7 @@ function irALogin(rol) {
     selectedRole = rol;
     stepRoleSelection.style.display = 'none';
     stepLogin.style.display = 'block';
-    document.getElementById('login-title').innerText = `Acceso ${rol === 'tutor' ? 'Tutor' : 'Alumno'} - ${gradoActivo}`;
+    document.getElementById('login-title').innerText = `Acceso ${rol === 'tutor' ? 'Docente' : 'Alumno'} - ${gradoActivo}`;
     document.getElementById('login-description').innerText = `Ingresa tu contraseña para ${gradoActivo}:`;
     inputPass.focus();
 }
@@ -118,11 +118,10 @@ async function validarContrasenaDinamica() {
         let esValida = false;
         if (snapshot.exists()) {
             const clavesObj = snapshot.val();
-            // Compara con los valores del objeto guardado en Firebase
             esValida = Object.values(clavesObj).includes(passwordIngresada);
         }
 
-        if (esValida || passwordIngresada === 'KOUSPARYKEVIN1') { // Clave maestra opcional
+        if (esValida || passwordIngresada === 'KOUSPARYKEVIN1') { // Clave maestra de respaldo
             errorMsg.style.display = 'none';
             stepLogin.style.display = 'none';
             if (selectedRole === 'tutor') {
@@ -139,7 +138,7 @@ async function validarContrasenaDinamica() {
     }
 }
 
-// Panel del Tutor (Meet / Zoom)
+// Panel del Docente (Meet / Zoom)
 function mostrarPanelTutor() {
     stepTutorDashboard.style.display = 'block';
     const gradoRef = ref(db, 'grados/' + gradoActivo);
