@@ -141,11 +141,59 @@
             <h3>Seguridad Administrador</h3>
             <p>Ingresa la contraseña maestra para acceder al panel de configuración:</p>
             <input type="password" id="input-admin-pass" placeholder="Contraseña de administrador">
-            <button id="btn-submit-admin-pass" style="background: var(--primary-green); color: #050a07; font-weight: bold;">Verificar</button>
+            <button id="btn-submit-admin-pass" style="background: var(--primary-green); color: #050a07; font-weight: bold; margin-top: 10px; padding: 10px; border: none; border-radius: 6px; cursor: pointer; width: 100%;">Verificar</button>
             <p id="admin-error-msg" style="color: #ff5555; display: none; margin-top: 10px;">Contraseña incorrecta.</p>
         </div>
     </div>
 
     <script type="module" src="JavaScript.js"></script>
+
+    <script>
+        // Script para activar el modal de Administrador
+        const modalAdmin = document.getElementById('modal-admin-password');
+        const btnAbrirAdmin = document.getElementById('btn-abrir-admin');
+        const closeModalAdmin = document.getElementById('close-modal-admin');
+        const btnSubmitAdminPass = document.getElementById('btn-submit-admin-pass');
+        const inputAdminPass = document.getElementById('input-admin-pass');
+        const adminErrorMsg = document.getElementById('admin-error-msg');
+
+        if(btnAbrirAdmin) {
+            btnAbrirAdmin.addEventListener('click', (e) => {
+                e.preventDefault();
+                if(modalAdmin) {
+                    modalAdmin.style.display = 'flex';
+                    inputAdminPass.value = '';
+                    adminErrorMsg.style.display = 'none';
+                    inputAdminPass.focus();
+                }
+            });
+        }
+
+        if(closeModalAdmin) {
+            closeModalAdmin.addEventListener('click', () => {
+                if(modalAdmin) modalAdmin.style.display = 'none';
+            });
+        }
+
+        function verificarAdmin() {
+            const passMaestra = "AdminCelmira2026"; 
+            if(inputAdminPass && inputAdminPass.value.trim() === passMaestra) {
+                window.location.href = "admin.html";
+            } else {
+                if(adminErrorMsg) adminErrorMsg.style.display = 'block';
+            }
+        }
+
+        if(btnSubmitAdminPass) {
+            btnSubmitAdminPass.addEventListener('click', verificarAdmin);
+            if(inputAdminPass) {
+                inputAdminPass.addEventListener('keypress', (e) => { 
+                    if(e.key === 'Enter') {
+                        verificarAdmin();
+                    } 
+                });
+            }
+        }
+    </script>
 </body>
 </html>
