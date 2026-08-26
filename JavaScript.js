@@ -1,14 +1,4 @@
-
-
-const btnTutor = document.getElementById('btn-select-tutor');
-const btnAlumno = document.getElementById('btn-select-alumno');
-if(btnTutor) btnTutor.addEventListener('click', () => irALogin('tutor'));
-if(btnAlumno) btnAlumno.addEventListener('click', () => irALogin('alumno'));
-
-function irALogin(rol) {
-    const btnSendAnnouncement = document.getElementById('btn-send-announcement');
-if(btnSendAnnouncement) {
-    btnSendAnnouncement.addEventListener('click', () => import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getDatabase, ref, set, onValue, get, push, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
 const firebaseConfig = {
@@ -233,4 +223,4 @@ if(btnGoToMeet) {
             alert('Aún no hay una clase activa asignada.');
         }
     });
-}     
+}
