@@ -18,7 +18,8 @@
             <ul>
                 <li><a href="menuacademia.html" class="active">Inicio</a></li>
                 <li><a href="preguntas.html">PREGUNTAS</a></li>
-                <li><a href="#" id="btn-abrir-admin" style="color: var(--primary-green); font-weight: bold; cursor: pointer;">ADMINISTRADOR</a></li>
+                <!-- Botón con evento directo para asegurar que abra -->
+                <li><a href="#" onclick="abrirAdminModal(event)" style="color: var(--primary-green); font-weight: bold; cursor: pointer;">ADMINISTRADOR</a></li>
             </ul>
         </nav>
     </header>
@@ -134,66 +135,61 @@
         </div>
     </div>
 
-    <!-- Modal de Contraseña para el Administrador (Independiente) -->
+    <!-- Modal de Administrador Directo -->
     <div id="modal-admin-password" class="modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; justify-content: center; align-items: center;">
         <div class="modal-content" style="background: #0b130f; border: 2px solid #10b981; padding: 30px; border-radius: 14px; width: 90%; max-width: 400px; text-align: center; color: white; position: relative;">
-            <span class="close-modal" id="close-modal-admin" style="position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: #94a3b8;">&times;</span>
+            <span onclick="cerrarAdminModal()" style="position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: #94a3b8;">&times;</span>
             <h3 style="color: #10b981; margin-bottom: 15px;">Seguridad Administrador</h3>
             <p style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 20px;">Ingresa la contraseña maestra para acceder al panel de configuración:</p>
             <input type="password" id="input-admin-pass" placeholder="Contraseña de administrador" style="width: 100%; padding: 12px; background: #050a07; border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; color: white; margin-bottom: 15px; outline: none;">
-            <button id="btn-submit-admin-pass" style="background: #10b981; color: #050a07; font-weight: bold; width: 100%; padding: 12px; border: none; border-radius: 6px; cursor: pointer;">Verificar</button>
+            <button onclick="verificarClaveAdmin()" style="background: #10b981; color: #050a07; font-weight: bold; width: 100%; padding: 12px; border: none; border-radius: 6px; cursor: pointer;">Verificar</button>
             <p id="admin-error-msg" style="color: #ff5555; display: none; margin-top: 10px;">Contraseña incorrecta.</p>
         </div>
     </div>
 
+    <!-- Script Principal y Funciones Globales para el Admin -->
     <script type="module" src="JavaScript.js"></script>
 
-    <!-- Script exclusivo para forzar la apertura del Administrador sin depender de JS externo -->
     <script>
-        window.addEventListener('DOMContentLoaded', () => {
-            const btnAdmin = document.getElementById('btn-abrir-admin');
-            const modalAdmin = document.getElementById('modal-admin-password');
-            const cerrarAdmin = document.getElementById('close-modal-admin');
-            const btnVerificar = document.getElementById('btn-submit-admin-pass');
-            const inputPass = document.getElementById('input-admin-pass');
-            const errorMsg = document.getElementById('admin-error-msg');
-
-            if (btnAdmin && modalAdmin) {
-                btnAdmin.onclick = function(e) {
-                    e.preventDefault();
-                    modalAdmin.style.display = 'flex';
-                    if(inputPass) {
-                        inputPass.value = '';
-                        inputPass.focus();
-                    }
-                    if(errorMsg) errorMsg.style.display = 'none';
-                };
-            }
-
-            if (cerrarAdmin && modalAdmin) {
-                cerrarAdmin.onclick = function() {
-                    modalAdmin.style.display = 'none';
-                };
-            }
-
-            function comprobarClaveAdmin() {
-                if (inputPass && inputPass.value.trim() === "AdminCelmira2026") {
-                    window.location.href = "admin.html";
-                } else {
-                    if(errorMsg) errorMsg.style.display = 'block';
+        function abrirAdminModal(event) {
+            event.preventDefault();
+            const modal = document.getElementById('modal-admin-password');
+            if (modal) {
+                modal.style.display = 'flex';
+                const input = document.getElementById('input-admin-pass');
+                if (input) {
+                    input.value = '';
+                    input.focus();
                 }
+                const error = document.getElementById('admin-error-msg');
+                if (error) error.style.display = 'none';
             }
+        }
 
-            if (btnVerificar) {
-                btnVerificar.onclick = comprobarClaveAdmin;
+        function cerrarAdminModal() {
+            const modal = document.getElementById('modal-admin-password');
+            if (modal) modal.style.display = 'none';
+        }
+
+        function verificarClaveAdmin() {
+            const input = document.getElementById('input-admin-pass');
+            const error = document.getElementById('admin-error-msg');
+            if (input && input.value.trim() === "AdminCelmira2026") {
+                window.location.href = "admin.html";
+            } else {
+                if (error) error.style.display = 'block';
             }
+        }
 
-            if (inputPass) {
-                inputPass.onkeypress = function(e) {
+        // Permitir presionar Enter en el input de admin
+        document.addEventListener('DOMContentLoaded', () => {
+            const input = document.getElementById('input-admin-pass');
+            if (input) {
+                input.addEventListener('keypress', (e) => {
                     if (e.key === 'Enter') {
-                        comprobarClaveAdmin();
+                        verificarClaveAdmin();
                     }
-                };
+                });
             }
         });
     </script>
