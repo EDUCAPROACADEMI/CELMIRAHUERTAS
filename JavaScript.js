@@ -33,6 +33,7 @@ let selectedRole = '';
 let gradoActivo = '';
 let FirebaseListener = null; 
 
+// Modales de Grados
 const modal = document.getElementById('modal-password');
 const closeModal = document.getElementById('close-modal');
 const stepRoleSelection = document.getElementById('step-role-selection');
@@ -223,4 +224,54 @@ if(btnGoToMeet) {
             alert('Aún no hay una clase activa asignada.');
         }
     });
+}
+
+// ==========================================
+// CONTROL DEL MODAL DE ADMINISTRADOR
+// ==========================================
+const modalAdmin = document.getElementById('modal-admin-password');
+const btnAbrirAdmin = document.getElementById('btn-abrir-admin');
+const closeModalAdmin = document.getElementById('close-modal-admin');
+const btnSubmitAdminPass = document.getElementById('btn-submit-admin-pass');
+const inputAdminPass = document.getElementById('input-admin-pass');
+const adminErrorMsg = document.getElementById('admin-error-msg');
+
+if (btnAbrirAdmin) {
+    btnAbrirAdmin.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (modalAdmin) {
+            modalAdmin.style.display = 'flex';
+            if (inputAdminPass) {
+                inputAdminPass.value = '';
+                inputAdminPass.focus();
+            }
+            if (adminErrorMsg) adminErrorMsg.style.display = 'none';
+        }
+    });
+}
+
+if (closeModalAdmin) {
+    closeModalAdmin.addEventListener('click', () => {
+        if (modalAdmin) modalAdmin.style.display = 'none';
+    });
+}
+
+function verificarAdmin() {
+    const passMaestra = "AdminCelmira2026";
+    if (inputAdminPass && inputAdminPass.value.trim() === passMaestra) {
+        window.location.href = "admin.html";
+    } else {
+        if (adminErrorMsg) adminErrorMsg.style.display = 'block';
+    }
+}
+
+if (btnSubmitAdminPass) {
+    btnSubmitAdminPass.addEventListener('click', verificarAdmin);
+    if (inputAdminPass) {
+        inputAdminPass.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                verificarAdmin();
+            }
+        });
+    }
 }
