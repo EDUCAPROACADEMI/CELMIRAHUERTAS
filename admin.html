@@ -3,136 +3,292 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CELMIRA HUERTAS | Panel Administrador</title>
-    <link rel="stylesheet" href="STILOS.CSS">
+    <title>CELMIRA HUERTAS |</title>
+    <meta name="description" content="Plataforma institucional del Colegio Celmira Huertas" />
+    <meta name="keywords" content="Celmira Huertas, clases virtuales, colegio, grados escolares" />
+    <meta name="author" content="Celmira Huertas">
+
     <style>
-        .admin-container { max-width: 600px; margin: 80px auto; background: #1e293b; padding: 30px; border-radius: 12px; border: 1px solid #00f0ff; color: white; }
-        .admin-container select, .admin-container input { width: 100%; padding: 12px; margin: 10px 0; background: #0f172a; border: 1px solid #475569; color: white; border-radius: 6px; box-sizing: border-box; }
-        .key-item { display: flex; justify-content: space-between; align-items: center; background: #0f172a; padding: 10px; margin: 5px 0; border-radius: 6px; }
-        .btn-delete { background: #ff5555; border: none; color: white; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
-        .btn-add { background: #00f0ff; border: none; color: black; font-weight: bold; padding: 10px; width: 100%; cursor: pointer; border-radius: 6px; }
+        :root {
+            --bg-gradient: radial-gradient(circle at 10% 20%, rgba(5, 30, 20, 1) 0%, rgba(7, 10, 19, 1) 100%);
+            --primary: #10b981;
+            --primary-hover: #059669;
+            --text-main: #ffffff;
+            --text-soft: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #070a13;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+            position: relative;
+        }
+
+        .left-side {
+            flex: 1.2;
+            background: var(--bg-gradient);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 10%;
+            position: relative;
+            z-index: 3;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .brand-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid var(--primary);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .brand-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .brand-text h2 {
+            color: var(--text-main);
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .brand-text span {
+            color: var(--text-soft);
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            display: block;
+        }
+
+        h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            color: var(--text-main);
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        h1 span {
+            color: var(--primary);
+        }
+
+        .description {
+            font-size: 1.15rem;
+            color: var(--text-soft);
+            line-height: 1.6;
+            max-width: 550px;
+        }
+
+        .right-side {
+            flex: 0.8;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 420px;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f1f5f9;
+            text-align: center;
+        }
+
+        .auth-card h3 {
+            font-size: 1.6rem;
+            color: #0f172a;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .auth-card p {
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+        }
+
+        .button {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            background: #0f172a; 
+            color: #ffffff;
+            text-decoration: none;
+            transition: background 0.2s ease, transform 0.1s ease;
+        }
+
+ flotante .button:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        @media(max-width: 968px) {
+            .container {
+                flex-direction: column;
+            }
+            .left-side {
+                padding: 40px 20px;
+                flex: 1;
+                justify-content: flex-end;
+            }
+            .right-side {
+                flex: 1;
+                padding: 20px;
+                align-items: flex-start;
+            }
+            h1 {
+                font-size: 2.2rem;
+            }
+            .auth-card {
+                max-width: 100%;
+                box-shadow: none;
+                padding: 20px 0;
+            }
+        }
     </style>
 </head>
+
 <body>
-    <header>
-        <div class="logo">
-            <img src="logo-celmira.png" alt="Escudo Celmira Huertas" style="height: 40px; width: 40px; object-fit: cover; border-radius: 50%; border: 2px solid var(--cyan-neon);">
-            CELMIRA <span>HUERTAS ADMIN</span>
+
+<div class="container">
+    <canvas id="particleCanvas"></canvas>
+
+    <div class="left-side">
+        <div class="brand">
+            <div class="brand-icon">
+                <img src="logo-celmira.png" alt="Escudo Celmira Huertas">
+            </div>
+            <div class="brand-text">
+                <h2>Celmira Huertas</h2>
+                <span>INSTITUCIÓN EDUCATIVA</span>
+            </div>
         </div>
-        <nav><ul><li><a href="menuacademia.html">Volver al Inicio</a></li></ul></nav>
-    </header>
-
-    <div class="admin-container">
-        <h2>Panel de Gestión de Contraseñas</h2>
-        <p style="color: #94a3b8; margin-bottom: 20px;">Agrega o elimina claves de acceso por grado en tiempo real.</p>
-
-        <label>Selecciona el Grado:</label>
-        <select id="select-grado">
-            <option value="PRIMERO">Primero</option>
-            <option value="SEGUNDO">Segundo</option>
-            <option value="TERCERO">Tercero</option>
-            <option value="CUARTO">Cuarto</option>
-            <option value="QUINTO">Quinto</option>
-            <option value="SEXTO">Sexto</option>
-            <option value="SEPTIMO">Séptimo</option>
-            <option value="OCTAVO">Octavo</option>
-            <option value="NOVENO">Noveno</option>
-            <option value="DECIMO">Décimo</option>
-            <option value="ONCE">Once</option>
-        </select>
-
-        <label>Selecciona el Rol:</label>
-        <select id="select-rol">
-            <option value="alumnos">Alumnos</option>
-            <option value="tutores">Tutores / Docentes</option>
-        </select>
-
-        <hr style="border-color: #475569; margin: 20px 0;">
-
-        <h3>Nueva Contraseña</h3>
-        <input type="text" id="nueva-clave" placeholder="Escribe la contraseña...">
-        <button class="btn-add" id="btn-agregar-clave">Guardar Contraseña</button>
-
-        <h3 style="margin-top: 30px;">Contraseñas Activas</h3>
-        <div id="lista-claves">Cargando...</div>
+        
+        <h1>Educación virtual <br><span>hacia el futuro.</span></h1>
+        
+        <p class="description">
+            Plataforma institucional para la gestión de clases virtuales, salas en vivo y acceso seguro para estudiantes y docentes de 1° a 11°.
+        </p>
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, onValue, push, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    <div class="right-side">
+        <div class="auth-card">
+            <h3>Bienvenido de vuelta</h3>
+            <p>Accede al panel institucional del colegio.</p>
+            <a href="menuacademia.html" class="button">INGRESAR AL INICIO</a>
+        </div>
+    </div>
+</div>
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyBqApazED0fbAW8Bj2hvlDiyRgIlJ-UrjA",
-            authDomain: "celmirahuertas-78fbb.firebaseapp.com",
-            databaseURL: "https://celmirahuertas-78fbb-default-rtdb.firebaseio.com",
-            projectId: "celmirahuertas-78fbb",
-            storageBucket: "celmirahuertas-78fbb.firebasestorage.app",
-            messagingSenderId: "133956808415",
-            appId: "1:133956808415:web:d4d837533410628ef3436a",
-            measurementId: "G-VJHXEY45SN"
-        };
+<script>
+const canvas = document.getElementById('particleCanvas');
+const ctx = canvas.getContext('2d');
 
-        const db = getDatabase(initializeApp(firebaseConfig));
-        const selectGrado = document.getElementById('select-grado');
-        const selectRol = document.getElementById('select-rol');
-        const listaClavesDiv = document.getElementById('lista-claves');
+function resizeCanvas(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resizeCanvas();
 
-        function cargarClaves() {
-            const grado = selectGrado.value;
-            const rol = selectRol.value;
-            const refRuta = ref(db, `configuracion_accesos/${grado}/${rol}`);
+const icons = ["📚","🎓","🏫","💻","📖","✍️","📐","🔬"];
 
-            listaClavesDiv.innerHTML = 'Cargando...';
+class FloatingIcon{
+    constructor(){
+        this.reset();
+    }
 
-            onValue(refRuta, (snapshot) => {
-                listaClavesDiv.innerHTML = '';
-                if (snapshot.exists()) {
-                    const data = snapshot.val();
-                    Object.keys(data).forEach((key) => {
-                        const password = data[key];
-                        listaClavesDiv.innerHTML += `
-                            <div class="key-item">
-                                <span>🔑 ${password}</span>
-                                <button class="btn-delete" onclick="window.borrarClave('${grado}', '${rol}', '${key}')">Eliminar</button>
-                            </div>`;
-                    });
-                } else {
-                    listaClavesDiv.innerHTML = '<p style="color: #94a3b8;">No hay contraseñas registradas para este grado.</p>';
-                }
-            }, { onlyOnce: true });
-        }
+    reset(){
+        this.x = Math.random() * (canvas.width * 0.6); 
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 12 + 14;
+        this.icon = icons[Math.floor(Math.random() * icons.length)];
+        this.dx = (Math.random() - 0.5) * 0.4;
+        this.dy = (Math.random() - 0.5) * 0.4;
+        this.opacity = Math.random() * 0.15 + 0.1; 
+    }
 
-        selectGrado.addEventListener('change', cargarClaves);
-        selectRol.addEventListener('change', cargarClaves);
-        cargarClaves();
+    draw(){
+        ctx.save();
+        ctx.globalAlpha = this.opacity;
+        ctx.font = `${this.size}px Arial`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(this.icon, this.x, this.y);
+        ctx.restore();
+    }
 
-        document.getElementById('btn-agregar-clave').addEventListener('click', () => {
-            const grado = selectGrado.value;
-            const rol = selectRol.value;
-            const nuevaClave = document.getElementById('nueva-clave').value.trim();
+    update(){
+        this.x += this.dx;
+        this.y += this.dy;
 
-            if (nuevaClave !== "") {
-                const refRuta = ref(db, `configuracion_accesos/${grado}/${rol}`);
-                push(refRuta, nuevaClave).then(() => {
-                    document.getElementById('nueva-clave').value = '';
-                    cargarClaves();
-                    alert('¡Contraseña agregada con éxito!');
-                }).catch((error) => {
-                    console.error("Error al guardar:", error);
-                    alert("Error al guardar. Revisa la consola.");
-                });
-            } else {
-                alert("Escribe una contraseña válida.");
-            }
-        });
+        if(this.x < -30) this.x = (canvas.width * 0.6) + 30;
+        if(this.x > (canvas.width * 0.6) + 30) this.x = -30;
 
-        window.borrarClave = function(grado, rol, key) {
-            if (confirm('¿Estás seguro de eliminar esta contraseña?')) {
-                remove(ref(db, `configuracion_accesos/${grado}/${rol}/${key}`)).then(() => {
-                    cargarClaves();
-                });
-            }
-        }
-    </script>
+        if(this.y < -30) this.y = canvas.height + 30;
+        if(this.y > canvas.height + 30) this.y = -30;
+
+        this.draw();
+    }
+}
+
+let particles = [];
+for(let i = 0; i < 25; i++){ 
+    particles.push(new FloatingIcon());
+}
+
+function animate(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => p.update());
+    requestAnimationFrame(animate);
+}
+
+animate();
+window.addEventListener("resize", resizeCanvas);
+</script>
 </body>
 </html>

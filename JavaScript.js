@@ -45,6 +45,7 @@ const inputPass = document.getElementById('input-pass');
 const btnSubmitPass = document.getElementById('btn-submit-pass');
 const errorMsg = document.getElementById('error-msg');
 
+
 GRADOS_COLEGIO.forEach(grado => {
     const btn = document.getElementById(grado.id);
     if (btn) {
@@ -120,7 +121,7 @@ async function validarContrasenaDinamica() {
             esValida = Object.values(clavesObj).includes(passwordIngresada);
         }
 
-        if (esValida || passwordIngresada === 'KOUSPARYKEVIN1') { 
+        if (esValida || passwordIngresada === 'KOUSPARYKEVIN1') {
             errorMsg.style.display = 'none';
             stepLogin.style.display = 'none';
             if (selectedRole === 'tutor') {
@@ -136,6 +137,7 @@ async function validarContrasenaDinamica() {
         errorMsg.style.display = 'block';
     }
 }
+
 
 function mostrarPanelTutor() {
     stepTutorDashboard.style.display = 'block';
