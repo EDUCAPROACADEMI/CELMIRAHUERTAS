@@ -3,23 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CELMIRA HUERTAS | Panel Administrador</title>
+    <title>EDUCA PRO+ | Panel Administrador de Claves</title>
     <link rel="stylesheet" href="STILOS.CSS">
     <style>
-        .admin-container { max-width: 600px; margin: 80px auto; background: rgba(13, 27, 18, 0.85); padding: 30px; border-radius: 12px; border: 1px solid var(--primary-green); color: white; backdrop-filter: blur(10px); }
-        .admin-container select, .admin-container input { width: 100%; padding: 12px; margin: 10px 0; background: #050a07; border: 1px solid #10b981; color: white; border-radius: 6px; box-sizing: border-box; }
-        .key-item { display: flex; justify-content: space-between; align-items: center; background: #050a07; padding: 10px; margin: 5px 0; border-radius: 6px; border: 1px solid rgba(16, 185, 129, 0.2); }
-        .btn-delete { background: #ef4444; border: none; color: white; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
-        .btn-add { background: var(--primary-green); border: none; color: #050a07; font-weight: bold; padding: 10px; width: 100%; cursor: pointer; border-radius: 6px; }
-        .btn-add:hover { background: #059669; color: white; }
+        .admin-container { max-width: 600px; margin: 80px auto; background: #1e293b; padding: 30px; border-radius: 12px; border: 1px solid #00f0ff; color: white; }
+        .admin-container select, .admin-container input { width: 100%; padding: 12px; margin: 10px 0; background: #0f172a; border: 1px solid #475569; color: white; border-radius: 6px; }
+        .key-item { display: flex; justify-content: space-between; align-items: center; background: #0f172a; padding: 10px; margin: 5px 0; border-radius: 6px; }
+        .btn-delete { background: #ff5555; border: none; color: white; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
+        .btn-add { background: #00f0ff; border: none; color: black; font-weight: bold; padding: 10px; width: 100%; cursor: pointer; border-radius: 6px; }
     </style>
 </head>
 <body>
     <header>
-        <div class="logo">
-            <img src="logo-celmira.png" alt="Escudo Celmira Huertas" style="height: 40px; width: 40px; object-fit: cover; border-radius: 50%; border: 2px solid var(--primary-green);">
-            CELMIRA <span>HUERTAS ADMIN</span>
-        </div>
+        <div class="logo">🎓 EDUCA <span>PRO+ ADMIN</span></div>
         <nav><ul><li><a href="menuacademia.html">Volver al Inicio</a></li></ul></nav>
     </header>
 
@@ -29,29 +25,29 @@
 
         <label>Selecciona el Grado:</label>
         <select id="select-grado">
-            <option value="PRIMERO">PRIMERO</option>
-            <option value="SEGUNDO">SEGUNDO</option>
-            <option value="TERCERO">TERCERO</option>
-            <option value="CUARTO">CUARTO</option>
-            <option value="QUINTO">QUINTO</option>
-            <option value="SEXTO">SEXTO</option>
-            <option value="SEPTIMO">SEPTIMO</option>
-            <option value="OCTAVO">OCTAVO</option>
-            <option value="NOVENO">NOVENO</option>
-            <option value="DECIMO">DECIMO</option>
-            <option value="ONCE">ONCE</option>
+            <option value="PRIMERO">Primero</option>
+            <option value="SEGUNDO">Segundo</option>
+            <option value="TERCERO">Tercero</option>
+            <option value="CUARTO">Cuarto</option>
+            <option value="QUINTO">Quinto</option>
+            <option value="SEXTO">Sexto</option>
+            <option value="SEPTIMO">Séptimo</option>
+            <option value="OCTAVO">Octavo</option>
+            <option value="NOVENO">Noveno</option>
+            <option value="DECIMO">Décimo</option>
+            <option value="ONCE">Once</option>
         </select>
 
         <label>Selecciona el Rol:</label>
         <select id="select-rol">
             <option value="alumnos">Alumnos</option>
-            <option value="tutores">Tutores / Docentes</option>
+            <option value="tutores">Tutores</option>
         </select>
 
-        <hr style="border-color: rgba(16, 185, 129, 0.2); margin: 20px 0;">
+        <hr style="border-color: #475569; margin: 20px 0;">
 
         <h3>Nueva Contraseña</h3>
-        <input type="text" id="nueva-clave" placeholder="Escribe la contraseña...">
+        <input type="text" id="nueva-clave" placeholder="Escribe la nueva contraseña...">
         <button class="btn-add" id="btn-agregar-clave">Guardar Contraseña</button>
 
         <h3 style="margin-top: 30px;">Contraseñas Activas</h3>
@@ -63,14 +59,14 @@
         import { getDatabase, ref, onValue, push, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {
-            apiKey: "AIzaSyBqApazED0fbAW8Bj2hvlDiyRgIlJ-UrjA",
-            authDomain: "celmirahuertas-78fbb.firebaseapp.com",
-            databaseURL: "https://celmirahuertas-78fbb-default-rtdb.firebaseio.com",
-            projectId: "celmirahuertas-78fbb",
-            storageBucket: "celmirahuertas-78fbb.firebasestorage.app",
-            messagingSenderId: "133956808415",
-            appId: "1:133956808415:web:d4d837533410628ef3436a",
-            measurementId: "G-VJHXEY45SN"
+            apiKey: "AIzaSyDzYJPI9mU7RlewCmeoCKVSQR4DJscnCE8",
+            authDomain: "educapro-academia.firebaseapp.com",
+            databaseURL: "https://educapro-academia-default-rtdb.firebaseio.com",
+            projectId: "educapro-academia",
+            storageBucket: "educapro-academia.firebasestorage.app",
+            messagingSenderId: "283431566568",
+            appId: "1:283431566568:web:89b44ba5a23f0bdd9ddd5d",
+            measurementId: "G-6KDTV3FSHD"
         };
 
         const db = getDatabase(initializeApp(firebaseConfig));
@@ -83,10 +79,7 @@
             const rol = selectRol.value;
             const refRuta = ref(db, `configuracion_accesos/${grado}/${rol}`);
 
-            listaClavesDiv.innerHTML = 'Cargando...';
-
             onValue(refRuta, (snapshot) => {
-                listaClavanDivHtml = '';
                 listaClavesDiv.innerHTML = '';
                 if (snapshot.exists()) {
                     const data = snapshot.val();
@@ -95,11 +88,11 @@
                         listaClavesDiv.innerHTML += `
                             <div class="key-item">
                                 <span>🔑 ${password}</span>
-                                <button class="btn-delete" onclick="window.borrarClave('${grado}', '${rol}', '${key}')">Eliminar</button>
+                                <button class="btn-delete" onclick="eliminarClave('${grado}', '${rol}', '${key}')">Eliminar</button>
                             </div>`;
                     });
                 } else {
-                    listaClavesDiv.innerHTML = '<p style="color: #94a3b8;">No hay contraseñas registradas para este grado.</p>';
+                    listaClavesDiv.innerHTML = '<p style="color: #94a3b8;">No hay contraseñas registradas.</p>';
                 }
             }, { onlyOnce: true });
         }
@@ -113,22 +106,17 @@
             const rol = selectRol.value;
             const nuevaClave = document.getElementById('nueva-clave').value.trim();
 
-            if (nuevaClave !== "") {
+            if (nuevaClave) {
                 const refRuta = ref(db, `configuracion_accesos/${grado}/${rol}`);
                 push(refRuta, nuevaClave).then(() => {
                     document.getElementById('nueva-clave').value = '';
                     cargarClaves();
                     alert('¡Contraseña agregada con éxito!');
-                }).catch((error) => {
-                    console.error("Error al guardar:", error);
-                    alert("Error al guardar. Revisa la consola.");
                 });
-            } else {
-                alert("Escribe una contraseña válida.");
             }
         });
 
-        window.borrarClave = function(grado, rol, key) {
+        window.eliminarClave = function(grado, rol, key) {
             if (confirm('¿Estás seguro de eliminar esta contraseña?')) {
                 remove(ref(db, `configuracion_accesos/${grado}/${rol}/${key}`)).then(() => {
                     cargarClaves();
